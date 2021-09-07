@@ -1,0 +1,34 @@
+---
+title: Introduction to Pandas
+author: abah
+date: '2021-09-07'
+slug: []
+categories: []
+tags:
+  - python
+description: ''
+externalLink: ''
+series: []
+---
+
+Pandas adalah salah satu library Python yang sangat berguna dalam mengolah dataframe. Pandas digunakan untuk meng-explore, membersihkan hingga memproses suatu data frame. Dataframe adalah sebuah tabel dua dimensi di mana setiap kolom berisi nilai-nilai dari suatu peubah (variabel).
+
+| Nama    | Pekerjaan  | Alamat |
+|---------|------------|--------|
+| Masdian | Freelancer | Serang |
+| Cato    | Dreamer    | Serang |
+| Abah    | Programmer | Serang |
+
+### Cara membuat dataframe - input data manual
+
+```{python}
+import pandas as pd
+
+data_dict = {
+  'Nama':['Masdian', 'Cato', 'Abah'],
+  'Pekerjaan':['Freelancer', 'Dreamer', 'Programmer'],
+  'Alamat':['Serang', 'Serang', 'Serang']
+}
+
+pd.DataFrame(data_dict)
+```

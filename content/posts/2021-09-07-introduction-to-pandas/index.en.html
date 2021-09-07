@@ -1,0 +1,59 @@
+---
+title: Introduction to Pandas
+author: abah
+date: '2021-09-07'
+slug: []
+categories: []
+tags:
+  - python
+description: ''
+externalLink: ''
+series: []
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<p>Pandas adalah salah satu library Python yang sangat berguna dalam mengolah dataframe. Pandas digunakan untuk meng-explore, membersihkan hingga memproses suatu data frame. Dataframe adalah sebuah tabel dua dimensi di mana setiap kolom berisi nilai-nilai dari suatu peubah (variabel).</p>
+<table>
+<thead>
+<tr class="header">
+<th>Nama</th>
+<th>Pekerjaan</th>
+<th>Alamat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Masdian</td>
+<td>Freelancer</td>
+<td>Serang</td>
+</tr>
+<tr class="even">
+<td>Cato</td>
+<td>Dreamer</td>
+<td>Serang</td>
+</tr>
+<tr class="odd">
+<td>Abah</td>
+<td>Programmer</td>
+<td>Serang</td>
+</tr>
+</tbody>
+</table>
+<div id="cara-membuat-dataframe---input-data-manual" class="section level3">
+<h3>Cara membuat dataframe - input data manual</h3>
+<pre class="python"><code>import pandas as pd
+
+data_dict = {
+  &#39;Nama&#39;:[&#39;Masdian&#39;, &#39;Cato&#39;, &#39;Abah&#39;],
+  &#39;Pekerjaan&#39;:[&#39;Freelancer&#39;, &#39;Dreamer&#39;, &#39;Programmer&#39;],
+  &#39;Alamat&#39;:[&#39;Serang&#39;, &#39;Serang&#39;, &#39;Serang&#39;]
+}
+
+pd.DataFrame(data_dict)</code></pre>
+<pre><code>##       Nama   Pekerjaan  Alamat
+## 0  Masdian  Freelancer  Serang
+## 1     Cato     Dreamer  Serang
+## 2     Abah  Programmer  Serang</code></pre>
+</div>
