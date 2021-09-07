@@ -1,0 +1,67 @@
+---
+title: Working Smarter, not Harder
+author: ''
+date: '2020-04-19'
+slug: working-smarter-not-harder
+categories: []
+tags: []
+description: ''
+externalLink: ''
+series: []
+---
+
+**`count()`**
+
+Pengguna **R** saat ini tentu sangat bersyukur karena dimanjakan oleh banyak sekali kemudahan ketika menggunakan **R** untuk berbagai keperluan. Salah satu kemudahan yang didapat oleh pengguna **R** adalah kemudahan dalam melakukan manipulasi data dengan menggunakan *package* `tidyverse`. Bagi yang terbiasa menggunakan **SQL**, tentu tidak akan kesulitan dalam melakukan manipulasi data dengan `tidyverse`. Tulisan kali ini akan mengulas sedikit tentang manipulasi data menggunakan **R**.
+
+Data yang akan digunakan adalah data penghasilan (*income*) yang diambil dari database [Biro Sensus Amerika Serikat tahun 1994](https://www.census.gov/en.html) oleh Ronny Kohavi dan Barry Becker (Data Mining and Visualization, Silicon Graphics). Data tersebut bisa diunduh [di sini](https://business-science.us17.list-manage.com/track/click?u=cc36813ecec32f8e7b5088961&id=afd7cd4cfe&e=f55c4a6ff8).
+
+Data hasil unduhan berupa file csv dan diberi nama "income-1". Data tersebut bisa dibuka menggunakan sintaks berikut
+
+``` {.r}
+income <- read.csv("income-1.csv")
+```
+
+```{r, echo=F}
+income <- read.csv("~/Blog/pribadi/Data/income-1.csv")
+```
+
+*Package* yang akan digunakan adalah `tidyverse` dan `broom`.
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(broom)
+```
+
+Sintaks berikut akan membuat tabel baru yang berisi peubah (*variable*) `gender`, `country`, dan agregat `hours_per_week` yang diberi nama `total_hours`. Kemudian data diurutkan secara menurun (*descending*) berdasarkan `total_hours`.
+
+```{r}
+income %>%
+  group_by(gender, country) %>%
+  summarize(total_hours = sum(hours_per_week)) %>%
+  arrange(desc(total_hours))
+```
+
+Karena terdapat `NA` pada peubah `country`, maka **R** menampilkan pesan (*WARNING*) sekaligus saran perbaikannya. Berikut adalah sintaks untuk mengatasi masalah tersebut.
+
+```{r}
+income$country <- fct_explicit_na(income$country)
+```
+
+Setelah dilakukan perbaikan, maka tidak ada lagi pesan kesalahan dan tampilan tabel baru tersebut adalah sebagai berikut.
+
+```{r, echo=F}
+income %>%
+  group_by(gender, country) %>%
+  summarize(total_hours = sum(hours_per_week)) %>%
+  arrange(desc(total_hours))
+```
+
+Ternyata, tabel yang sama bisa dibuat hanya dengan menggunakan sebaris sintaks menggunakan fungsi `count`. Berikut adalah sintaksnya.
+
+```{r}
+income %>%
+  count(gender, country, wt = hours_per_week, name = "total_hours", sort = T)
+```
+
+Bagaimana? Gampang bukan?

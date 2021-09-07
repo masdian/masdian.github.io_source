@@ -1,0 +1,62 @@
+---
+title: Memecah Data dengan pwalk()
+author: ''
+date: '2020-04-17'
+slug: macan
+categories: []
+tags: []
+description: ''
+externalLink: ''
+series: []
+---
+
+Sebagai orang yang banyak berkecimpung dengan data, terkadang kita diminta untuk memecah sebuah tabel berdasarkan kategori yang ada pada sebuah peubah pada tabel tersebut dan menyimpannya sebagai file dengan format tertentu (misalnya csv) dalam suatu folder tertentu. Jika tabel yang kita punya tidak terlalu besar dan banyaknya kategori juga sedikit, maka kita bisa melakukan *filter* satu persatu atau *filter* dengan perulangan (*looping*) menggunakan `for`.
+
+Misalnya kita akan memecah tabel `iris` berdasarkan peubah `Species`, sehingga akan terbentuk 3 (tiga) buah tabel baru. Tabel baru tersebut akan diberi nama dengan format `db_{nama kategori peubah Species}.csv` dan disimpan di folder **Split** yang berada di **Desktop**. Dengan menggunakan *package* `tidyverse`, pemecahan tabel bisa dilakukan satu persatu menggunakan sintaks berikut.
+
+```
+library(tidyverse)
+
+iris %>%
+  filter(Species == "setosa") %>%
+  write.csv("db_setosa.csv")
+
+iris %>%
+  filter(Species == "versicolor") %>%
+  write.csv("db_versicolor.csv")
+
+iris %>%
+  filter(Species == "virginica") %>%
+  write.csv("db_virginica.csv")
+```
+
+Jika kategori peubah yang digunakan sebagai *filter* banyak, maka sintaks di atas menjadi tidak efisien. Selain menggunakan sintaks manual seperti di atas, prose pemecahan tabel juga bisa dilakukan menggunakan perulangan (*looping*). Tulisan kali ini tidak akan membahas pemecahan tabel menggunakan *looping*. Meskipun demikian, sintaks berikut juga bekerja sangat efisien khususnya saat menghadapi kategori peubah *filter* yang banyak.
+
+```
+library(tidyverse)
+iris %>%
+  group_nest(Species, keep = T) %>%
+  pwalk(function(Species, data){
+    path <- file.path("~Desktop/Split/", glue::glue("db_{Species}.csv"))
+  write.csv(data, path)
+  })
+```
+```{r, warning=F, message=F, echo=FALSE}
+library(tidyverse)
+iris %>%
+  group_nest(Species, keep = T) %>%
+  pwalk(function(Species, data){
+    path <- file.path("C:/Users/masdi/Desktop/Split/", glue::glue("db_{Species}.csv"))
+  write.csv(data, path)
+  })
+```
+
+Hasil dari pemecahanan tabel `iris` berdasarkan kategori peubah `Species` bisa dilihat menggunakan fungsi `list.files()` pada direktori penyimpanan hasil pemecahan tabel berikut.
+```
+list.files("~Desktop/Split")
+```
+```{r, echo=F}
+list.files("C:/Users/masdi/Desktop/Split")
+```
+Bagaimana? Efisien kan?
+

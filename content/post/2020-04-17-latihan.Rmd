@@ -1,0 +1,14 @@
+---
+title: latihan
+author: ''
+date: '2020-04-17'
+slug: latihan
+categories: []
+tags: []
+---
+
+
+```{r}
+mtcars
+```
+

@@ -1,0 +1,41 @@
+---
+title: Memecah Data dengan pwalk()
+author: ''
+date: '2020-04-17'
+slug: macan
+categories: []
+tags: []
+description: ''
+externalLink: ''
+series: []
+---
+
+
+
+<p>Sebagai orang yang banyak berkecimpung dengan data, terkadang kita diminta untuk memecah sebuah tabel berdasarkan kategori yang ada pada sebuah peubah pada tabel tersebut dan menyimpannya sebagai file dengan format tertentu (misalnya csv) dalam suatu folder tertentu. Jika tabel yang kita punya tidak terlalu besar dan banyaknya kategori juga sedikit, maka kita bisa melakukan <em>filter</em> satu persatu atau <em>filter</em> dengan perulangan (<em>looping</em>) menggunakan <code>for</code>.</p>
+<p>Misalnya kita akan memecah tabel <code>iris</code> berdasarkan peubah <code>Species</code>, sehingga akan terbentuk 3 (tiga) buah tabel baru. Tabel baru tersebut akan diberi nama dengan format <code>db_{nama kategori peubah Species}.csv</code> dan disimpan di folder <strong>Split</strong> yang berada di <strong>Desktop</strong>. Dengan menggunakan <em>package</em> <code>tidyverse</code>, pemecahan tabel bisa dilakukan satu persatu menggunakan sintaks berikut.</p>
+<pre><code>library(tidyverse)
+
+iris %&gt;%
+  filter(Species == &quot;setosa&quot;) %&gt;%
+  write.csv(&quot;db_setosa.csv&quot;)
+
+iris %&gt;%
+  filter(Species == &quot;versicolor&quot;) %&gt;%
+  write.csv(&quot;db_versicolor.csv&quot;)
+
+iris %&gt;%
+  filter(Species == &quot;virginica&quot;) %&gt;%
+  write.csv(&quot;db_virginica.csv&quot;)</code></pre>
+<p>Jika kategori peubah yang digunakan sebagai <em>filter</em> banyak, maka sintaks di atas menjadi tidak efisien. Selain menggunakan sintaks manual seperti di atas, prose pemecahan tabel juga bisa dilakukan menggunakan perulangan (<em>looping</em>). Tulisan kali ini tidak akan membahas pemecahan tabel menggunakan <em>looping</em>. Meskipun demikian, sintaks berikut juga bekerja sangat efisien khususnya saat menghadapi kategori peubah <em>filter</em> yang banyak.</p>
+<pre><code>library(tidyverse)
+iris %&gt;%
+  group_nest(Species, keep = T) %&gt;%
+  pwalk(function(Species, data){
+    path &lt;- file.path(&quot;~Desktop/Split/&quot;, glue::glue(&quot;db_{Species}.csv&quot;))
+  write.csv(data, path)
+  })</code></pre>
+<p>Hasil dari pemecahanan tabel <code>iris</code> berdasarkan kategori peubah <code>Species</code> bisa dilihat menggunakan fungsi <code>list.files()</code> pada direktori penyimpanan hasil pemecahan tabel berikut.</p>
+<pre><code>list.files(&quot;~Desktop/Split&quot;)</code></pre>
+<pre><code>## [1] &quot;db_setosa.csv&quot;     &quot;db_versicolor.csv&quot; &quot;db_virginica.csv&quot;</code></pre>
+<p>Bagaimana? Efisien kan?</p>
