@@ -11,7 +11,13 @@ externalLink: ''
 series: []
 ---
 
-Pandas adalah salah satu library Python yang sangat berguna dalam mengolah dataframe. Pandas digunakan untuk meng-explore, membersihkan hingga memproses suatu data frame. Dataframe adalah sebuah tabel dua dimensi di mana setiap kolom berisi nilai-nilai dari suatu peubah (variabel).
+Tulisan ini terinspirasi setelah mengikuti sesi minggu ke-3 atau minggu terakhir dari *Workshop Python for Data Scientist* yang diselenggarakan oleh Program Studi Statistika dan Sains Data - IPB University. *Workshop Pyhton for Data Scientist* diselenggarakan selama 3 hari di mana hari pertama pada tanggal 21 Agustus 2021 membahas tentang *Introduction to Python*. Hari kedua diselenggarakan pada 28 Agustus 2021 dan membahas tentang *Data Analysis using Python*. Hari ketiga di mana akhirnya bisa ikut secara live diselenggarakan pada 04 September 2021. Kali ini yang dibahas adalah *Machine Learning using Python*.
+
+Entah kenapa bisa *miss* di minggu pertama dan minggu kedua :-D
+
+Meskipun hanya mengikuti hari terakhir, tulisan ini bukan materi yang dibahas di hari terakhir. Ucapan terima kasih sangat layak kepada panitia *Workshop* yang telah memberikan mengumpulkan dan membagi materi yang dibahas pada minggu pertama dan kedua sehingga yang tidak sempat ikut pun bisa mencoba untuk membaca dan mempelajarinya.
+
+Pandas adalah salah satu library Python yang sangat berguna dalam mengolah dataframe. Pandas digunakan untuk meng-explore, membersihkan hingga memproses suatu data frame. Dataframe adalah sebuah tabel dua dimensi di mana setiap kolom berisi nilai-nilai dari suatu peubah (variabel). Berikut adalah contoh dataframe yang terdiri atas 3 kolom peubah, yaitu Nama, Pekerjaan, dan Alamat.
 
 | Nama    | Pekerjaan  | Alamat |
 |---------|------------|--------|
@@ -21,14 +27,120 @@ Pandas adalah salah satu library Python yang sangat berguna dalam mengolah dataf
 
 ### Cara membuat dataframe - input data manual
 
-```{python}
-import pandas as pd
+Dataframe bisa dibuat si python dengan cara mengkonversi `dictionary` menjadi dataframe menggunakan fungsi `DataFrame` dari library pandas. Pertama, buat `dictionary` menggunakan data pada tabel di atas.
 
+```{python}
 data_dict = {
   'Nama':['Masdian', 'Cato', 'Abah'],
   'Pekerjaan':['Freelancer', 'Dreamer', 'Programmer'],
   'Alamat':['Serang', 'Serang', 'Serang']
 }
+```
 
+Setelah itu *import* library pandas.
+
+```{python}
+import pandas as pd
+```
+
+Berikut adalah sintaks untuk menampilkan `dictionary data_dict` sebagai dataframe.
+
+```{python}
 pd.DataFrame(data_dict)
+```
+
+Jika ingin mengubah `data_dict` menjadi dataframe, maka bisa menggunakan sintaks berikut.
+
+```{python}
+data_dict = pd.DataFrame(data_dict)
+```
+
+Jika dijalankan, sintaks tersebut tidak menampilkan keluaran apapun karena hanya meng-*assign* `pd.DataFrame(data_dict)` ke `data_dict.` Jika ingin menampikan isi dari `data_dict` bisa menggunakan sintaks berikut.
+
+```{python}
+data_dict
+```
+
+### Membaca file Excel/csv di Phython
+
+Membaca file excel atau csv di python bisa menggunakan fungsi `read_excel` atau `read_csv` dari library pandas. Misalkan kita akan membaca file [**HR_comma_sep.csv**](https://github.com/masdian/data_sources/raw/main/HR_comma_sep.csv){target="_blank"} dari Kaggle. Karena akan menggunakan fungsi dari library `pandas`, maka jangan lupa untuk mengimpor library `pandas` terlebih dahulu.
+
+```{python}
+import pandas as pd
+```
+
+Misalkan kita akan membaca `HR_comma_sep.csv` dan menyimpannya menjadi dataframe `df.`
+
+`df = pd.read_csv("HR_comma_sep.csv")`
+
+```{python echo=FALSE}
+df = pd.read_csv("https://github.com/masdian/data_sources/raw/main/HR_comma_sep.csv")
+```
+
+### Operasi dataframe sederhana
+
+Jika ingin mengetahui banyaknya peubah dan tipe data dari setiap peubah, maka bisa menggunakan fungsi `info()` pada dataframe `df`.
+
+```{python}
+df.info()
+```
+
+`df.info()` memberikan informasi tentang nama peubah yang ditampilkan pada kolom `Column.` Terdapat 10 peubah dimulai dari `satisfaction_level` hingga `salary.` Kolom `Non-Null Count` menampilkan banyak data yang tidak kosong dari setiap peubah. Terlihat bahwa tidak ada data kosong pada dataframe `df`. Tipe setiap peubah ditampilkan pada kolom `Dtype`. `float64` adalah tipe data berupa bilangan real, `int64` berupa integer atau bilangan bulat, dan `object` merupakan *string* atau karakter.
+
+Ukuran atau dimensi dataframe `df` bisa dilihat dari hasil yang ditampilkan `df.info(),` di mana terdapat 14.999 baris dan 10 kolom. Selain menggunakan fungsi `info()`, dimensi atau ukuran dataframe df bisa dilihat menggunakan fungsi `shape`.
+
+`df.shape`
+
+Dimensi dataframe yang dihasilkan fungsi `shape` adalah 14.999 baris dan 10 kolom.
+
+```{python echo=FALSE}
+df.shape
+```
+
+Kita juga bisa menampilkan data teratas dari dataframe `df` menggunakan fungsi `head()`. Secara default fungsi ini akan menampilkan 5 data teratas. Jika ingin menampilkan sejumlah `k` data teratas, maka kita bisa menambahkan argumen `k` pada fungsi `head()`. Misalkan kita ingin menampilkan 8 data teratas, maka sintaks yang bisa digunakan adalah sebagai berikut.
+
+`df.head(8)`
+
+Output yang dihasilkan adalah sebagai berikut.
+
+```{python echo=FALSE}
+df.head(8)
+```
+
+Selain menampilkan data teratas, kita juga bisa menampilkan data paling bawah menggunakan fungsi `tail().` Misalnya kita akan menampilkan 10 data paling bawah.
+
+```{python echo=FALSE}
+df.tail(10)
+```
+
+Jika kita ingin menampilkan $k$ buah data secara acak, maka kita bisa menggunakan fungsi `sample()` dengan argumen $k$. Misalkan kita ingin menampilkan 8 buah data secara acak.
+
+`df.sample(8)`
+
+Output yang dihasilkan adalah sebagai berikut.
+
+```{python echo=FALSE}
+df.sample(8)
+```
+
+Terlihat bahwa data yang ditampilkan tidak berurutan, tetapi diambil secara acak.
+
+Jika ingin menghitung dan menampilkan ringkasan data dari dataframe `df`, kita bisa menggunakan fungsi `describe.` Berikut adalah sintaks yang bisa digunakan.
+
+`df.describe()`
+
+Output:
+
+```{python echo=FALSE}
+df.describe()
+```
+
+Terlihat bahwa yang ditampilkan adalah ringkasan data untuk semua peubah bertipe numerik (`float64`, `integer64`). Sedangkan untuk peubah bertipe `object` tidak ditampilkan. Jika ingin menampilkan ringkasan data untuk peubah bertipe `object`, maka bisa menggunakan sintaks berikut.
+
+`df.select_dtypes('object').describe()`
+
+Output
+
+```{python echo=FALSE}
+df.select_dtypes('object').describe()
 ```

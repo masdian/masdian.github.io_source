@@ -14,7 +14,10 @@ series: []
 <script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
 
 
-<p>Pandas adalah salah satu library Python yang sangat berguna dalam mengolah dataframe. Pandas digunakan untuk meng-explore, membersihkan hingga memproses suatu data frame. Dataframe adalah sebuah tabel dua dimensi di mana setiap kolom berisi nilai-nilai dari suatu peubah (variabel).</p>
+<p>Tulisan ini terinspirasi setelah mengikuti sesi minggu ke-3 atau minggu terakhir dari <em>Workshop Python for Data Scientist</em> yang diselenggarakan oleh Program Studi Statistika dan Sains Data - IPB University. <em>Workshop Pyhton for Data Scientist</em> diselenggarakan selama 3 hari di mana hari pertama pada tanggal 21 Agustus 2021 membahas tentang <em>Introduction to Python</em>. Hari kedua diselenggarakan pada 28 Agustus 2021 dan membahas tentang <em>Data Analysis using Python</em>. Hari ketiga di mana akhirnya bisa ikut secara live diselenggarakan pada 04 September 2021. Kali ini yang dibahas adalah <em>Machine Learning using Python</em>.</p>
+<p>Entah kenapa bisa <em>miss</em> di minggu pertama dan minggu kedua :-D</p>
+<p>Meskipun hanya mengikuti hari terakhir, tulisan ini bukan materi yang dibahas di hari terakhir. Ucapan terima kasih sangat layak kepada panitia <em>Workshop</em> yang telah memberikan mengumpulkan dan membagi materi yang dibahas pada minggu pertama dan kedua sehingga yang tidak sempat ikut pun bisa mencoba untuk membaca dan mempelajarinya.</p>
+<p>Pandas adalah salah satu library Python yang sangat berguna dalam mengolah dataframe. Pandas digunakan untuk meng-explore, membersihkan hingga memproses suatu data frame. Dataframe adalah sebuah tabel dua dimensi di mana setiap kolom berisi nilai-nilai dari suatu peubah (variabel). Berikut adalah contoh dataframe yang terdiri atas 3 kolom peubah, yaitu Nama, Pekerjaan, dan Alamat.</p>
 <table>
 <thead>
 <tr class="header">
@@ -43,17 +46,125 @@ series: []
 </table>
 <div id="cara-membuat-dataframe---input-data-manual" class="section level3">
 <h3>Cara membuat dataframe - input data manual</h3>
-<pre class="python"><code>import pandas as pd
-
-data_dict = {
+<p>Dataframe bisa dibuat si python dengan cara mengkonversi <code>dictionary</code> menjadi dataframe menggunakan fungsi <code>DataFrame</code> dari library pandas. Pertama, buat <code>dictionary</code> menggunakan data pada tabel di atas.</p>
+<pre class="python"><code>data_dict = {
   &#39;Nama&#39;:[&#39;Masdian&#39;, &#39;Cato&#39;, &#39;Abah&#39;],
   &#39;Pekerjaan&#39;:[&#39;Freelancer&#39;, &#39;Dreamer&#39;, &#39;Programmer&#39;],
   &#39;Alamat&#39;:[&#39;Serang&#39;, &#39;Serang&#39;, &#39;Serang&#39;]
-}
-
-pd.DataFrame(data_dict)</code></pre>
+}</code></pre>
+<p>Setelah itu <em>import</em> library pandas.</p>
+<pre class="python"><code>import pandas as pd</code></pre>
+<p>Berikut adalah sintaks untuk menampilkan <code>dictionary data_dict</code> sebagai dataframe.</p>
+<pre class="python"><code>pd.DataFrame(data_dict)</code></pre>
 <pre><code>##       Nama   Pekerjaan  Alamat
 ## 0  Masdian  Freelancer  Serang
 ## 1     Cato     Dreamer  Serang
 ## 2     Abah  Programmer  Serang</code></pre>
+<p>Jika ingin mengubah <code>data_dict</code> menjadi dataframe, maka bisa menggunakan sintaks berikut.</p>
+<pre class="python"><code>data_dict = pd.DataFrame(data_dict)</code></pre>
+<p>Jika dijalankan, sintaks tersebut tidak menampilkan keluaran apapun karena hanya meng-<em>assign</em> <code>pd.DataFrame(data_dict)</code> ke <code>data_dict.</code> Jika ingin menampikan isi dari <code>data_dict</code> bisa menggunakan sintaks berikut.</p>
+<pre class="python"><code>data_dict</code></pre>
+<pre><code>##       Nama   Pekerjaan  Alamat
+## 0  Masdian  Freelancer  Serang
+## 1     Cato     Dreamer  Serang
+## 2     Abah  Programmer  Serang</code></pre>
+</div>
+<div id="membaca-file-excelcsv-di-phython" class="section level3">
+<h3>Membaca file Excel/csv di Phython</h3>
+<p>Membaca file excel atau csv di python bisa menggunakan fungsi <code>read_excel</code> atau <code>read_csv</code> dari library pandas. Misalkan kita akan membaca file <a href="https://github.com/masdian/data_sources/raw/main/HR_comma_sep.csv" target="_blank"><strong>HR_comma_sep.csv</strong></a> dari Kaggle. Karena akan menggunakan fungsi dari library <code>pandas</code>, maka jangan lupa untuk mengimpor library <code>pandas</code> terlebih dahulu.</p>
+<pre class="python"><code>import pandas as pd</code></pre>
+<p>Misalkan kita akan membaca <code>HR_comma_sep.csv</code> dan menyimpannya menjadi dataframe <code>df.</code></p>
+<p><code>df = pd.read_csv("HR_comma_sep.csv")</code></p>
+</div>
+<div id="operasi-dataframe-sederhana" class="section level3">
+<h3>Operasi dataframe sederhana</h3>
+<p>Jika ingin mengetahui banyaknya peubah dan tipe data dari setiap peubah, maka bisa menggunakan fungsi <code>info()</code> pada dataframe <code>df</code>.</p>
+<pre class="python"><code>df.info()</code></pre>
+<pre><code>## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+## RangeIndex: 14999 entries, 0 to 14998
+## Data columns (total 10 columns):
+##  #   Column                 Non-Null Count  Dtype  
+## ---  ------                 --------------  -----  
+##  0   satisfaction_level     14999 non-null  float64
+##  1   last_evaluation        14999 non-null  float64
+##  2   number_project         14999 non-null  int64  
+##  3   average_montly_hours   14999 non-null  int64  
+##  4   time_spend_company     14999 non-null  int64  
+##  5   Work_accident          14999 non-null  int64  
+##  6   left                   14999 non-null  int64  
+##  7   promotion_last_5years  14999 non-null  int64  
+##  8   sales                  14999 non-null  object 
+##  9   salary                 14999 non-null  object 
+## dtypes: float64(2), int64(6), object(2)
+## memory usage: 1.1+ MB</code></pre>
+<p><code>df.info()</code> memberikan informasi tentang nama peubah yang ditampilkan pada kolom <code>Column.</code> Terdapat 10 peubah dimulai dari <code>satisfaction_level</code> hingga <code>salary.</code> Kolom <code>Non-Null Count</code> menampilkan banyak data yang tidak kosong dari setiap peubah. Terlihat bahwa tidak ada data kosong pada dataframe <code>df</code>. Tipe setiap peubah ditampilkan pada kolom <code>Dtype</code>. <code>float64</code> adalah tipe data berupa bilangan real, <code>int64</code> berupa integer atau bilangan bulat, dan <code>object</code> merupakan <em>string</em> atau karakter.</p>
+<p>Ukuran atau dimensi dataframe <code>df</code> bisa dilihat dari hasil yang ditampilkan <code>df.info(),</code> di mana terdapat 14.999 baris dan 10 kolom. Selain menggunakan fungsi <code>info()</code>, dimensi atau ukuran dataframe df bisa dilihat menggunakan fungsi <code>shape</code>.</p>
+<p><code>df.shape</code></p>
+<p>Dimensi dataframe yang dihasilkan fungsi <code>shape</code> adalah 14.999 baris dan 10 kolom.</p>
+<pre><code>## (14999, 10)</code></pre>
+<p>Kita juga bisa menampilkan data teratas dari dataframe <code>df</code> menggunakan fungsi <code>head()</code>. Secara default fungsi ini akan menampilkan 5 data teratas. Jika ingin menampilkan sejumlah <code>k</code> data teratas, maka kita bisa menambahkan argumen <code>k</code> pada fungsi <code>head()</code>. Misalkan kita ingin menampilkan 8 data teratas, maka sintaks yang bisa digunakan adalah sebagai berikut.</p>
+<p><code>df.head(8)</code></p>
+<p>Output yang dihasilkan adalah sebagai berikut.</p>
+<pre><code>##    satisfaction_level  last_evaluation  ...  sales  salary
+## 0                0.38             0.53  ...  sales     low
+## 1                0.80             0.86  ...  sales  medium
+## 2                0.11             0.88  ...  sales  medium
+## 3                0.72             0.87  ...  sales     low
+## 4                0.37             0.52  ...  sales     low
+## 5                0.41             0.50  ...  sales     low
+## 6                0.10             0.77  ...  sales     low
+## 7                0.92             0.85  ...  sales     low
+## 
+## [8 rows x 10 columns]</code></pre>
+<p>Selain menampilkan data teratas, kita juga bisa menampilkan data paling bawah menggunakan fungsi <code>tail().</code> Misalnya kita akan menampilkan 10 data paling bawah.</p>
+<pre><code>##        satisfaction_level  last_evaluation  ...      sales  salary
+## 14989                0.43             0.57  ...  technical     low
+## 14990                0.89             0.88  ...    support     low
+## 14991                0.09             0.81  ...    support     low
+## 14992                0.40             0.48  ...    support     low
+## 14993                0.76             0.83  ...    support     low
+## 14994                0.40             0.57  ...    support     low
+## 14995                0.37             0.48  ...    support     low
+## 14996                0.37             0.53  ...    support     low
+## 14997                0.11             0.96  ...    support     low
+## 14998                0.37             0.52  ...    support     low
+## 
+## [10 rows x 10 columns]</code></pre>
+<p>Jika kita ingin menampilkan <span class="math inline">\(k\)</span> buah data secara acak, maka kita bisa menggunakan fungsi <code>sample()</code> dengan argumen <span class="math inline">\(k\)</span>. Misalkan kita ingin menampilkan 8 buah data secara acak.</p>
+<p><code>df.sample(8)</code></p>
+<p>Output yang dihasilkan adalah sebagai berikut.</p>
+<pre><code>##        satisfaction_level  last_evaluation  ...        sales  salary
+## 2293                 0.75             0.77  ...   management  medium
+## 10371                0.99             0.37  ...  product_mng     low
+## 13614                0.48             0.67  ...   management  medium
+## 10317                0.22             0.70  ...        sales  medium
+## 3024                 0.41             0.96  ...      support  medium
+## 12006                0.10             0.77  ...        sales     low
+## 5106                 0.53             0.80  ...           IT     low
+## 3869                 0.74             0.70  ...      support     low
+## 
+## [8 rows x 10 columns]</code></pre>
+<p>Terlihat bahwa data yang ditampilkan tidak berurutan, tetapi diambil secara acak.</p>
+<p>Jika ingin menghitung dan menampilkan ringkasan data dari dataframe <code>df</code>, kita bisa menggunakan fungsi <code>describe.</code> Berikut adalah sintaks yang bisa digunakan.</p>
+<p><code>df.describe()</code></p>
+<p>Output:</p>
+<pre><code>##        satisfaction_level  last_evaluation  ...          left  promotion_last_5years
+## count        14999.000000     14999.000000  ...  14999.000000           14999.000000
+## mean             0.612834         0.716102  ...      0.238083               0.021268
+## std              0.248631         0.171169  ...      0.425924               0.144281
+## min              0.090000         0.360000  ...      0.000000               0.000000
+## 25%              0.440000         0.560000  ...      0.000000               0.000000
+## 50%              0.640000         0.720000  ...      0.000000               0.000000
+## 75%              0.820000         0.870000  ...      0.000000               0.000000
+## max              1.000000         1.000000  ...      1.000000               1.000000
+## 
+## [8 rows x 8 columns]</code></pre>
+<p>Terlihat bahwa yang ditampilkan adalah ringkasan data untuk semua peubah bertipe numerik (<code>float64</code>, <code>integer64</code>). Sedangkan untuk peubah bertipe <code>object</code> tidak ditampilkan. Jika ingin menampilkan ringkasan data untuk peubah bertipe <code>object</code>, maka bisa menggunakan sintaks berikut.</p>
+<p><code>df.select_dtypes('object').describe()</code></p>
+<p>Output</p>
+<pre><code>##         sales salary
+## count   14999  14999
+## unique     10      3
+## top     sales    low
+## freq     4140   7316</code></pre>
 </div>
