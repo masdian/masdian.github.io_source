@@ -1,0 +1,17 @@
+---
+title: Mendapatkan multiple-files google drive link dengan mudah
+author: masdian
+date: '2021-11-26'
+slug: []
+categories: []
+tags:
+  - google drive
+  - link
+description: ''
+externalLink: ''
+series: []
+---
+
+Mengirimkan email dengan lampiran (*attachment*) tentunya bukan hal yang sulit, asalkan ukuran lampiran tidak melebihi batas. Mengirimkan email dengan lampiran kepada banyak penerima juga bisa dilakukan dengan mudah. Misalnya mengirimkan brosur promosi produk kepada ribuan alamat email pelanggan.
+
+Bagaimana jika lampiran yang akan dikirimkan adalah lampiran yang unik untuk setiap penerima? Misalnya lampiran sertifikat *online workshop* berupa file pdf kepada 1500 peserta.

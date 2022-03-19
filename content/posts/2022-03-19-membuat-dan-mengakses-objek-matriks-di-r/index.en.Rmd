@@ -1,0 +1,25 @@
+---
+title: Membuat dan Mengakses Objek Matriks di R
+author: masdian
+date: '2022-03-19'
+slug: []
+categories: []
+tags:
+  - matriks
+description: ''
+externalLink: ''
+series: []
+---
+
+### Membuat matriks dan mengaksesnya
+
+Misalkan kita ingin membuat matriks $A$ yang berukuran $2\times3$ di R seperti berikut.
+
+$$\begin{bmatrix}
+1 & 3 & 5 \\
+7 & 4 & 6
+\end{bmatrix}$$ maka perintah yang digunakan adalah sebagai berikut
+
+```{r eval=FALSE, include=T}
+A <- matrix(c(1, 3, 5, 7, 4, 6), ncol = 3, byrow = T)
+```
