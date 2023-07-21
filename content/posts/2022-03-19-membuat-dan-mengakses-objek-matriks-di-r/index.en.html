@@ -9,6 +9,7 @@ tags:
 description: ''
 externalLink: ''
 series: []
+math: true
 ---
 
 <script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
@@ -21,5 +22,39 @@ series: []
 1 &amp; 3 &amp; 5 \\
 7 &amp; 4 &amp; 6
 \end{bmatrix}\]</span> maka perintah yang digunakan adalah sebagai berikut</p>
+<pre class="r"><code>A &lt;- matrix(c(1, 7, 3, 4, 5, 6), ncol = 3)</code></pre>
+<p>Perhatikan penulisan anggota atau elemen matriks <span class="math inline">\(A\)</span> pada sintaks R, <code>c(1, 7, 3, 4, 5, 6)</code>. Secara <em>default</em>, R akan membaca elemen matriks berdasarkan kolom dimulai dari kolom pertama hingga kolom terakhir. Jika diinginkan agar R membaca elemen matriks <span class="math inline">\(A\)</span> berdasarkan baris, maka penulisan elemen matriks <span class="math inline">\(A\)</span> pada sintaks R adalah <code>c(1, 3, 5, 7, 4, 6)</code>dan ditambah dengan argumen tambahan <code>byrow = T</code>.</p>
 <pre class="r"><code>A &lt;- matrix(c(1, 3, 5, 7, 4, 6), ncol = 3, byrow = T)</code></pre>
+<p>Kedua sintaks di atas akan menghasilkan matriks <span class="math inline">\(A\)</span> yang sama. Untuk menampilkan dan melihat isi dari matriks <span class="math inline">\(A\)</span>, maka bisa gunakan sintaks berikut.</p>
+<pre class="r"><code>A</code></pre>
+<p>dan kita akan memperoleh keluaran (<em>output</em>) berikut.</p>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    7    4    6</code></pre>
+<p>Keluaran di atas juga bisa dipanggil menggunakan sintaks berikut</p>
+<pre class="r"><code>print(A)</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    7    4    6</code></pre>
+<p>Karena matriks <span class="math inline">\(A\)</span> berukuran $2 $ atau banyaknya baris ada <span class="math inline">\(2\)</span> dan banyaknya kolom ada <span class="math inline">\(3\)</span>, maka pada sintaks pembentukan matriks kita cukup nyatakan banyaknya baris (<code>nrow = 2</code>) saja atau banyaknya colom (<code>ncol = 3</code>) saja. Jadi, matriks <span class="math inline">\(A\)</span> di atas bisa dibuat juga menggunakan sintaks berikut.</p>
+<pre class="r"><code>A &lt;- matrix(c(1, 7, 3, 4, 5, 6), nrow = 2)</code></pre>
+<p>atau</p>
+<pre class="r"><code>A &lt;- matrix(c(1, 3, 5, 7, 4, 6), nrow = 2, byrow = T)</code></pre>
+<p>Untuk mengetahui ordo atau ukuran dari matriks <span class="math inline">\(A\)</span>, kita bisa menggunakan perintah berikut.</p>
+<pre class="r"><code>dim(A)</code></pre>
+<p>dan akan diperoleh keluaran sebagai berikut</p>
+<pre><code>## [1] 2 3</code></pre>
+<p>yang berarti banyaknya baris adalah 2 dan banyaknya kolom adalah 3.</p>
+<p>Terkadang kita hanya ingin mengetahui ukuran barisnya saja atau ukuran kolomnya saja. Kita bisa mengetahui ukuran baris dari matriks <span class="math inline">\(A\)</span> menggunakan sintaks berikut.</p>
+<pre class="r"><code>nrow(A)</code></pre>
+<pre><code>## [1] 2</code></pre>
+<p>dan ukuran kolom matriks <span class="math inline">\(A\)</span> menggunakan sintaks berikut.</p>
+<pre class="r"><code>ncol(A)</code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>Dengan menggunakan R, kita juga bisa mengakses elemen tertentu, baris tertentu, dan kolom tertentu dari suatu matriks. Misalnya kita ingin memperoleh nilai elemen baris ke-2 dan kolom ke-3 dari matriks <span class="math inline">\(A\)</span> atau <span class="math inline">\(a_{32}\)</span> , maka kita bisa menggunakan sintaks berikut.</p>
+<pre class="r"><code>A[2,3]</code></pre>
+<pre><code>## [1] 6</code></pre>
+<p>Sintaks di atas diawali oleh naman matriksnya dan diikuti oleh kurung siku. Di dalam kurung siku terdapat bilangan yang menyatakan posisi baris dan kolom. Bilangan yang di sebelah kiri <strong>koma</strong> adalah menyatakan posisi baris dan bilangan di sebelah kanan <strong>koma</strong> menyatakan posisi kolom. Jadi, jika ingin mengakses elemen baris ke-2 dan kolom ke-1 dari matriks <span class="math inline">\(A\)</span> <span class="math inline">\((a_{21})\)</span> , maka kita bisa menggunakan sintaks berikut.</p>
+<pre class="r"><code>A[2,1]</code></pre>
+<pre><code>## [1] 7</code></pre>
 </div>
